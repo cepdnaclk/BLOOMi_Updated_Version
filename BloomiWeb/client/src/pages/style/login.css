@@ -32,6 +32,7 @@ body {
     padding: 20px;
   }
   
+
   /* Image styles */
   .img-fluid {
     max-width: 100%;
@@ -45,9 +46,14 @@ body {
   
   .form-outline input {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ced4da;
     border-radius: 5px;
+    font-size: 17px;
+  }
+
+  .form-outline input:focus {
+    border: 1px solid #007bff;
   }
   
   .form-outline label {
@@ -122,9 +128,9 @@ body {
   
   .form_input {
     background-color: white;
-    padding: 100px 20px;
+    padding: 60px 20px;
     border: 1px solid #ced4da;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
   }
   
