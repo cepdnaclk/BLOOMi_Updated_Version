@@ -1,8 +1,14 @@
 import React from 'react';
 import '../style/login.css';
+import AuthService from '../../services/AuthServices';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom'; 
+
 
 export default function Register() {
-  const onSubmit = (event) => {
+
+  const navigate = useNavigate();
+  const onSubmit = async(event) => {
     event.preventDefault();
     const fullName = event.target.fullName.value;
     const email = event.target.email.value;
@@ -10,6 +16,37 @@ export default function Register() {
     const confirmPassword = event.target.confirmPassword.value;
 
     console.log('Received values from form:', { fullName, email, password, confirmPassword });
+
+    try {
+      if (password === confirmPassword) {
+        const registrationResult = await AuthService.register(
+          fullName,
+          email,
+          password,
+          
+        );
+
+        if (registrationResult.success) {
+          toast.success(registrationResult.message);
+        
+          setTimeout(() => {
+            toast("Redirecting to login page");
+            navigate('/login');
+          }, 2000);
+        }else{
+          toast.error(registrationResult.message)
+        }
+        
+      }else{
+        toast.error("Passwords do not match");
+        
+      }
+      
+
+    } catch (error) {
+
+      console.error('Registration error:', error);
+    }
   };
 
   return (

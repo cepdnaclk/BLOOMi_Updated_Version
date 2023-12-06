@@ -1,13 +1,47 @@
 import React from 'react';
 import '../style/login.css';
+import AuthService from '../../services/AuthServices';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom'; 
 
 export default function Login() {
-  const onFinish = (event) => {
+
+
+  const navigate = useNavigate();
+  
+  const onSubmit = async(event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    console.log('Received values from form: ', { email, password });
+    console.log('Received values from form:', { email, password});
+
+    try {
+        const loginResult = await AuthService.login(
+          email,
+          password,
+          
+        );
+
+        if (loginResult.success) {
+          toast.success(loginResult.message);
+          toast.success(loginResult.data)
+          localStorage.setItem("token",loginResult.data)
+        
+          setTimeout(() =>  {
+            toast("Redirecting to Home page");
+            navigate('/');
+          }, 2000);
+        }else{
+          toast.error(loginResult.message)
+        }
+        
+      
+
+    } catch (error) {
+
+      console.error('Login error:', error);
+    }
   };
 
   return (
@@ -19,7 +53,7 @@ export default function Login() {
               <img src="./assets/images/main.png" className="img-fluid" alt="" />
             </div>
             <div className="col-md-7 col-lg-4 col-xl-4 offset-xl-1 form_input">
-              <form onSubmit={onFinish}>
+              <form onSubmit={onSubmit}>
                 {/* Email input */}
                 <div className="form-outline mb-4">
                   <input
