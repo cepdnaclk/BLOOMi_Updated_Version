@@ -3,10 +3,12 @@ import '../style/login.css';
 import AuthService from '../../services/AuthServices';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'; 
+import { useSelector, useDispatch  } from 'react-redux';
 
 export default function Login() {
 
-
+  const { loading } = useSelector((state) => state.alerts);
+  console.log(loading);
   const navigate = useNavigate();
   
   const onSubmit = async(event) => {
