@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import AuthServices from '../../services/AuthServices';
+import Layout from '../../components/layout';
 
 export default function UserMaindash() {
 
@@ -12,8 +13,8 @@ export default function UserMaindash() {
   }, []);
 
   return (
-    <div>
-      <h1>User Main Dashboard</h1>
-    </div>
+    <Layout>
+      <h1>user main dash</h1> 
+    </Layout>
   );
 }
