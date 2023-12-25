@@ -59,4 +59,12 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("get-user-info-by-id", async() =>{
+  try{
+
+  }catch(error){
+
+  }
+})
+
 module.exports = router;

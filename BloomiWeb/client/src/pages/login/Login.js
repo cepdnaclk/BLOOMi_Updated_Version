@@ -25,7 +25,7 @@ export default function Login() {
 
         if (loginResult.success) {
           toast.success(loginResult.message);
-          toast.success(loginResult.data)
+          
           localStorage.setItem("token",loginResult.data)
         
           setTimeout(() =>  {
