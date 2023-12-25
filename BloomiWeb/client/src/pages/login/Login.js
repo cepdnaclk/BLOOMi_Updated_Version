@@ -30,7 +30,7 @@ export default function Login() {
         
           setTimeout(() =>  {
             toast("Redirecting to Home page");
-            navigate('/');
+            navigate('/userHome');
           }, 2000);
         }else{
           toast.error(loginResult.message)
