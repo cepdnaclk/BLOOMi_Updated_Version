@@ -10,30 +10,46 @@ import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import UserHome from "./pages/user_dash/user_main_dash";
 import { useSelector } from "react-redux";
+import ProtectedRoute from "./components/protectedRoute";
+import PublicRoute from "./components/publicRoute";
 
 function App() {
-
   const { loading } = useSelector((state) => state.alerts);
   return (
     <BrowserRouter>
-      {
-        loading && 
+      {loading && (
         <div className="spinner-parent">
-        <div class="text-center">
-          <div class="spinner-border" role="status">
-            
+          <div class="text-center">
+            <div class="spinner-border" role="status"></div>
           </div>
         </div>
-      </div>
-      }
+      )}
       <Toaster position="top-center" reverseOrder={false} />
-      <Header />
+      <PublicRoute>
+        <Header />
+      </PublicRoute>
+      
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        } />
+        <Route path="/register" element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        } />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/userHome" element={<UserHome />} />
+        <Route
+          path="/userHome"
+          element={
+            <ProtectedRoute>
+              <UserHome />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
