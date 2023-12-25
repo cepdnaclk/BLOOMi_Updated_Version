@@ -2,11 +2,15 @@ import React from 'react';
 import '../style/login.css';
 import AuthService from '../../services/AuthServices';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { showLoading } from '../../redux/alertsSlice'; 
+import { hideLoading } from '../../redux/alertsSlice';
 
 
 export default function Register() {
 
+  const dispatch = useDispatch(); 
   const navigate = useNavigate();
   const onSubmit = async(event) => {
     event.preventDefault();
@@ -18,6 +22,7 @@ export default function Register() {
     console.log('Received values from form:', { fullName, email, password, confirmPassword });
 
     try {
+      dispatch(showLoading())
       if (password === confirmPassword) {
         const registrationResult = await AuthService.register(
           fullName,
@@ -25,6 +30,7 @@ export default function Register() {
           password,
           
         );
+        dispatch(hideLoading())
 
         if (registrationResult.success) {
           toast.success(registrationResult.message);
@@ -44,6 +50,7 @@ export default function Register() {
       
 
     } catch (error) {
+      dispatch(hideLoading())
 
       console.error('Registration error:', error);
     }

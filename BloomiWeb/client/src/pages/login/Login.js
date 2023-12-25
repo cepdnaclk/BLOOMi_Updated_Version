@@ -3,12 +3,13 @@ import '../style/login.css';
 import AuthService from '../../services/AuthServices';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'; 
-import { useSelector, useDispatch  } from 'react-redux';
+import { useDispatch  } from 'react-redux';
+import { showLoading } from '../../redux/alertsSlice';
+import { hideLoading } from '../../redux/alertsSlice'; 
 
 export default function Login() {
 
-  const { loading } = useSelector((state) => state.alerts);
-  console.log(loading);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const onSubmit = async(event) => {
@@ -19,12 +20,13 @@ export default function Login() {
     console.log('Received values from form:', { email, password});
 
     try {
+        dispatch(showLoading())
         const loginResult = await AuthService.login(
           email,
           password,
           
         );
-
+        dispatch(hideLoading())
         if (loginResult.success) {
           toast.success(loginResult.message);
           
@@ -41,7 +43,7 @@ export default function Login() {
       
 
     } catch (error) {
-
+      dispatch(hideLoading()) 
       console.error('Login error:', error);
     }
   };
