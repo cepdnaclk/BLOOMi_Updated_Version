@@ -40,20 +40,20 @@ function Layout({ children }) {
       path: "/userHome",
     },
     {
-      name: "Users",
+      name: "All Users",
       icon: "ri-user-line",
-      path: "/users",
+      path: "/allUser",
     },
     {
       name: "Counsellors",
       icon: "ri-user-add-line",
-      path: "/counsellors",
+      path: "/allCounsellor",
     },
 
     {
-      name: "Admins",
+      name: "All Admins",
       icon: "ri-user-settings-line",
-      path: "/admin",
+      path: "/alladmins",
     },
     {
       name: "Profile",

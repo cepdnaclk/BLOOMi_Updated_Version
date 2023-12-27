@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../redux/userSlice";
+import { setUser} from "../redux/userSlice";
 import axios from "axios";
 import { hideLoading, showLoading } from "../redux/alertsSlice";
+
 
 function ProtectedRoute(props) {
   const { user } = useSelector((state) => state.user);
@@ -29,6 +30,7 @@ function ProtectedRoute(props) {
 
       if (response.data.success) {
         dispatch(setUser(response.data.data));
+      
       } else {
         localStorage.clear();
         navigate("/login");
@@ -43,7 +45,7 @@ function ProtectedRoute(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!user) {
+      if (!user ) {
         await getUser();
       }
     };

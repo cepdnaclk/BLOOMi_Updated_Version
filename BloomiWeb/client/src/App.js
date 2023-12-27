@@ -16,6 +16,9 @@ import ApplyCounsellor from "./pages/user_dash/applying_counsellor";
 import UserAppintment from "./pages/user_dash/appointment";
 import UserProfile from "./pages/user_dash/user_profile";
 import Notification from "./pages/notification/notification";
+import AllUser from "./pages/admin_pages/all_user";
+import AllCounsellor from "./pages/admin_pages/all_counsellor";
+import AllAdmins from "./pages/admin_pages/all_admins";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -105,6 +108,30 @@ function App() {
           element={
             <ProtectedRoute>
               <Notification />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/allUser"
+          element={
+            <ProtectedRoute>
+              <AllUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/allCounsellor"
+          element={
+            <ProtectedRoute>
+              <AllCounsellor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/alladmins"
+          element={
+            <ProtectedRoute>
+              <AllAdmins />
             </ProtectedRoute>
           }
         />
