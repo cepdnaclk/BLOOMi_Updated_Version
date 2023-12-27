@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import Layout from "../../components/layout";
 import "./styles/applying_counsellor.css";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { showLoading } from "../../redux/alertsSlice";
+import { hideLoading } from "../../redux/alertsSlice";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function ApplyCounsellor() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,6 +22,7 @@ export default function ApplyCounsellor() {
     fromTime: "",
     toTime: "",
     profession: "",
+    
   });
 
   const [formValidation, setFormValidation] = useState({
@@ -21,6 +33,7 @@ export default function ApplyCounsellor() {
     fromTime: true,
     toTime: true,
     profession: true,
+   
   });
 
   const handleChange = (e) => {
@@ -36,12 +49,37 @@ export default function ApplyCounsellor() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-  };
 
-  
+    console.log("Received values from form:", formData);
+    try {
+      dispatch(showLoading());
+      const response = await axios.post("api/user/apply-counsellor-account", {
+        ...formData,
+        userId: user._id,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+      );
+      dispatch(hideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setTimeout(() => {
+          navigate("/userHome");
+        }, 2000);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+
+      console.error("Registration error:", error);
+    }
+  };
 
   return (
     <Layout>
@@ -56,14 +94,15 @@ export default function ApplyCounsellor() {
               </label>
               <input
                 type="text"
-                className={`form-control ${formValidation.firstName ? "" : "is-invalid"}`}
+                className={`form-control ${
+                  formValidation.firstName ? "" : "is-invalid"
+                }`}
                 id="firstName"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
                 required
               />
-              
             </div>
           </div>
           <div className="col-md-6">
@@ -73,14 +112,15 @@ export default function ApplyCounsellor() {
               </label>
               <input
                 type="text"
-                className={`form-control ${formValidation.lastName ? "" : "is-invalid"}`}
+                className={`form-control ${
+                  formValidation.lastName ? "" : "is-invalid"
+                }`}
                 id="lastName"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
                 required
               />
-             
             </div>
           </div>
         </div>
@@ -93,14 +133,15 @@ export default function ApplyCounsellor() {
               </label>
               <input
                 type="email"
-                className={`form-control ${formValidation.email ? "" : "is-invalid"}`}
+                className={`form-control ${
+                  formValidation.email ? "" : "is-invalid"
+                }`}
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
-              
             </div>
           </div>
           <div className="col-md-6">
@@ -110,14 +151,15 @@ export default function ApplyCounsellor() {
               </label>
               <input
                 type="tel"
-                className={`form-control ${formValidation.phoneNumber ? "" : "is-invalid"}`}
+                className={`form-control ${
+                  formValidation.phoneNumber ? "" : "is-invalid"
+                }`}
                 id="phoneNumber"
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 required
               />
-              
             </div>
           </div>
         </div>
@@ -130,14 +172,15 @@ export default function ApplyCounsellor() {
               </label>
               <input
                 type="time" // Change input type to time
-                className={`form-control ${formValidation.fromTime ? "" : "is-invalid"}`}
+                className={`form-control ${
+                  formValidation.fromTime ? "" : "is-invalid"
+                }`}
                 id="fromTime"
                 name="fromTime"
                 value={formData.fromTime}
                 onChange={handleChange}
                 required
               />
-              
             </div>
           </div>
           <div className="col-md-6">
@@ -147,7 +190,9 @@ export default function ApplyCounsellor() {
               </label>
               <input
                 type="time" // Change input type to time
-                className={`form-control ${formValidation.toTime ? "" : "is-invalid"}`}
+                className={`form-control ${
+                  formValidation.toTime ? "" : "is-invalid"
+                }`}
                 id="toTime"
                 name="toTime"
                 value={formData.toTime}
@@ -155,7 +200,9 @@ export default function ApplyCounsellor() {
                 required
               />
               {formValidation.toTime || (
-                <div className="invalid-feedback">Please enter the ending time.</div>
+                <div className="invalid-feedback">
+                  Please enter the ending time.
+                </div>
               )}
             </div>
           </div>
@@ -169,17 +216,20 @@ export default function ApplyCounsellor() {
               </label>
               <input
                 type="text"
-                className={`form-control ${formValidation.profession ? "" : "is-invalid"}`}
+                className={`form-control ${
+                  formValidation.profession ? "" : "is-invalid"
+                }`}
                 id="profession"
                 name="profession"
                 value={formData.profession}
                 onChange={handleChange}
                 required
               />
-              
             </div>
           </div>
         </div>
+
+        
 
         <div className="row" id="button-row">
           <div className="col-md-12">

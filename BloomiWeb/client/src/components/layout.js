@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./styles/layout.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Badge} from "antd";
 
 function Layout({ children }) {
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -99,8 +100,10 @@ function Layout({ children }) {
                   }`}
                   onClick={() => handleMenuClick(index)}
                 >
-                  <Link to={menu.path}><i className={menu.icon}></i></Link>
-                  
+                  <Link to={menu.path}>
+                    <i className={menu.icon}></i>
+                  </Link>
+
                   {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
                 </div>
               );
@@ -132,8 +135,13 @@ function Layout({ children }) {
               ></i>
             )}
 
-            <div className="info-use">
-              <i className="ri-notification-3-fill remix-icon"></i>
+            <div className="info-use" onClick={() =>{
+              navigate("/notifications")
+            }}>
+              <Badge count={user?.unreadNotifications.length}>
+                <i className="ri-notification-3-fill remix-icon"></i>
+              </Badge>
+
               <Link className="anchor" to="/userHome">
                 {user?.fullName}
               </Link>
@@ -146,4 +154,4 @@ function Layout({ children }) {
   );
 }
 
-export default Layout;
+export default Layout; 
