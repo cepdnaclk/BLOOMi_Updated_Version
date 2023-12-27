@@ -129,4 +129,48 @@ router.post("/apply-counsellor-account", authmiddleware, async (req, res) => {
   }
 });
 
+router.post("/mark-all-notification-seen", authmiddleware, async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.body.userId });
+    const unreadNotifications = user.unreadNotifications;
+    const seenNotifications = user.seenNotifications;
+    seenNotifications.push(...unreadNotifications);
+    user.unreadNotifications = [];
+    user.seenNotifications = seenNotifications; 
+    const updatedUser = await user.save(); 
+    updatedUser.password = undefined;
+
+    console.log(updatedUser);
+
+    res.status(200).send({
+      success: true,
+      message: "Marked as read",
+      data: updatedUser,
+    });
+  } catch (err) {
+    res.status(500).send({ message: "Error read data", success: false, err });
+  }
+});
+
+router.post("/delete-all-notification", authmiddleware, async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.body.userId });
+    user.unreadNotifications = [];
+    user.seenNotifications = [];
+    const updateUser = await user.save();
+    updateUser.password = undefined;
+
+    res.status(200).send({
+      success: true,
+      message: "Marked as read",
+      data: updateUser,
+    });
+  } catch (err) {
+    res.status(500).send({ message: "Error read data", success: false, err });
+  }
+});
+
+
+
+
 module.exports = router;

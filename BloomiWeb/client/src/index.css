@@ -44,3 +44,7 @@ code {
   font-weight: bold ;
   color: rgba(0, 0, 0, 0.659);
 }
+
+.anchors{
+  cursor: pointer !important;
+}
