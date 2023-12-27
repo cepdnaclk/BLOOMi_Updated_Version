@@ -26,11 +26,6 @@ const counsellorSchema = new mongoose.Schema(
       required: true,
     },
 
-    availableDates: {
-      type: Array,
-      default: [],
-    },
-
     fromTime: {
       type: String,
       required: true,
@@ -41,9 +36,14 @@ const counsellorSchema = new mongoose.Schema(
       required: true,
     },
 
-    profesion: {
+    profession: {
       type: String,
       required: true,
+    },
+
+    status : {
+      type: String,
+      default: "pending",
     },
   },
   { timestamps: true }

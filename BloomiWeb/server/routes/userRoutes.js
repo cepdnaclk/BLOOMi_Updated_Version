@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/user_model");
+const counsellorModel = require("../models/counsellor_model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authmiddleware = require("../middleware/authmiddleware");
@@ -61,18 +62,17 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/get-user-info-by-id", authmiddleware, async(req,res) => {
+router.post("/get-user-info-by-id", authmiddleware, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.userId);
     user.password = undefined;
-   
+
     if (!user) {
       return res.status(200).send({
         message: "User doesn't exists",
         success: false,
       });
     } else {
-      
       res.status(200).send({
         success: true,
         data: user,
@@ -84,6 +84,48 @@ router.post("/get-user-info-by-id", authmiddleware, async(req,res) => {
       success: false,
       error,
     });
+  }
+});
+
+router.post("/apply-counsellor-account", authmiddleware, async (req, res) => {
+  try {
+    const newCounsellor = new counsellorModel({
+      ...req.body,
+      status: "pending",
+    });
+
+    await newCounsellor.save();
+
+    const adminUser = await userModel.findOne({
+      isAdministrator: true,
+    });
+
+    const unseenNotificatin = adminUser.unreadNotifications;
+
+    unseenNotificatin.push({
+      type: "New counsellor application",
+      message: `${newCounsellor.firstName} ${newCounsellor.lastName} has applied to be a counsellor`,
+      data: {
+        counsellorId: newCounsellor._id,
+        counsellorName: `${newCounsellor.firstName}  " " ${newCounsellor.lastName}`,
+      },
+
+      onclick: "/admin/counsellor-application",
+    });
+
+    await userModel.findByIdAndUpdate(adminUser._id, {
+      unseenNotificatin,
+    });
+
+    adminUser.save();
+
+    res
+      .status(200)
+      .send({ message: "Application submitted successfully", success: true });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "Error submiting form", success: false, err });
   }
 });
 

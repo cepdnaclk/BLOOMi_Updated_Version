@@ -15,6 +15,7 @@ import PublicRoute from "./components/publicRoute";
 import ApplyCounsellor from "./pages/user_dash/applying_counsellor";
 import UserAppintment from "./pages/user_dash/appointment";
 import UserProfile from "./pages/user_dash/user_profile";
+import Notification from "./pages/notification/notification";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -98,7 +99,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notification />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
+
       <Footer />
     </BrowserRouter>
   );
