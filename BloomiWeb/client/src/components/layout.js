@@ -18,7 +18,7 @@ function Layout({ children }) {
     {
       name: "Appointments",
       icon: "ri-file-list-fill",
-      path: "/appointments",
+      path: "/userAppointments",
     },
     {
       name: "Apply Counsellor",
@@ -28,7 +28,7 @@ function Layout({ children }) {
     {
       name: "Profile",
       icon: "ri-file-user-fill ",
-      path: "/profile",
+      path: "/userProfile",
     },
   ];
 
@@ -99,7 +99,8 @@ function Layout({ children }) {
                   }`}
                   onClick={() => handleMenuClick(index)}
                 >
-                  <i className={menu.icon}></i>
+                  <Link to={menu.path}><i className={menu.icon}></i></Link>
+                  
                   {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
                 </div>
               );

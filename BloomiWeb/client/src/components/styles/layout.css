@@ -60,6 +60,8 @@
   box-shadow: 0 0 2px gray;
   height: 89vh;
   width: 100%;
+  padding: 15px;
+  color: black;
 }
 
 .sidebar-header img {
@@ -128,6 +130,30 @@
 }
 
 @media screen and (max-width: 768px) {
+  .main {
+    padding: 10px;
+    height: 122vh;
+  }
+
+  .body {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 2px gray;
+    height: 108vh;
+    width: 100%;
+    padding: 15px;
+    color: black;
+  }
+
+  .collapsed-sidebar {
+    background-color: #001247;
+    border-radius: 8px;
+    box-shadow: 0 0 2px gray;
+    margin-right: 20px;
+    margin-bottom: 2%;
+    height: 119vh;
+    padding: 12px;
+  }
   .sidebar {
     display: none;
   }
