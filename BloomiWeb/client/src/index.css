@@ -38,3 +38,9 @@ code {
   cursor: pointer;
   padding-left: 10px;
 }
+
+.page-title{
+  font-size: 25px;
+  font-weight: bold ;
+  color: rgba(0, 0, 0, 0.659);
+}

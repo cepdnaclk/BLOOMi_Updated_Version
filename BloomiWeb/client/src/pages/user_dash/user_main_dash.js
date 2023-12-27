@@ -14,7 +14,7 @@ export default function UserMaindash() {
 
   return (
     <Layout>
-      <h1>user main dash</h1> 
+      <h1 className='page-title'>User Dashboard</h1> 
     </Layout>
   );
 }

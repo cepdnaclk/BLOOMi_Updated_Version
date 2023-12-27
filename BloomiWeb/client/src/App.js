@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 import ProtectedRoute from "./components/protectedRoute";
 import PublicRoute from "./components/publicRoute";
 import ApplyCounsellor from "./pages/user_dash/applying_counsellor";
+import UserAppintment from "./pages/user_dash/appointment";
+import UserProfile from "./pages/user_dash/user_profile";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -30,11 +32,14 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/" element={
-          <PublicRoute>
-            <Home />
-          </PublicRoute>
-        } />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Home />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -72,6 +77,24 @@ function App() {
           element={
             <ProtectedRoute>
               <UserHome />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/userAppointments"
+          element={
+            <ProtectedRoute>
+              <UserAppintment />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/userProfile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
             </ProtectedRoute>
           }
         />
