@@ -22,6 +22,29 @@ const userSchema = new mongoose.Schema({
         max: 1024
     },
 
+    isCounsellor: {
+        type: Boolean,
+        default: false
+    
+    },
+
+    isAdministrator: {
+        type: Boolean,
+        default: false
+    },
+
+    seenNotifications: {
+        type: Array,
+        default: []
+    },
+
+    unreadNotifications: {
+        type: Array,
+        default: []
+    },
+
+     
+
     
 
 }, { timestamps: true }

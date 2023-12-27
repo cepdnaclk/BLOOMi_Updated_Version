@@ -12,6 +12,7 @@ import UserHome from "./pages/user_dash/user_main_dash";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./components/protectedRoute";
 import PublicRoute from "./components/publicRoute";
+import ApplyCounsellor from "./pages/user_dash/applying_counsellor";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -25,23 +26,47 @@ function App() {
         </div>
       )}
       <Toaster position="top-center" reverseOrder={false} />
-      <PublicRoute>
-        <Header />
-      </PublicRoute>
-      
+
+      <Header />
+
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={
+        <Route path="/" element={
           <PublicRoute>
-            <Login />
+            <Home />
           </PublicRoute>
         } />
-        <Route path="/register" element={
-          <PublicRoute>
-            <Register />
-          </PublicRoute>
-        } />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/forgotPassword"
+          element={
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/applyingCounsellor"
+          element={
+            <ProtectedRoute>
+              <ApplyCounsellor />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/userHome"
           element={

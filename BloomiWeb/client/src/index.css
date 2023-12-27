@@ -31,3 +31,10 @@ code {
   color: #fff !important; 
  
 }
+
+.remix-icon{
+  font-size: 26px;
+  color: black !important;
+  cursor: pointer;
+  padding-left: 10px;
+}
